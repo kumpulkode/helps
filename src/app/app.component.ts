@@ -11,7 +11,7 @@ export class AppComponent {
     gkey: string = "AIzaSyD-oMdz0k7vXKVsOlYs9HuGuhamFjeaK8s";
     lat: number = -7.0553899;
     lng: number = 110.3809564;
-    searchText : string = "Find Location";
+    searchText: string = "Find Location";
     listSaved = [];
     temp = [];
     ntemp = [];
@@ -27,7 +27,7 @@ export class AppComponent {
         this.lat = event.coords.lat;
         this.lng = event.coords.lng;
 
-        this.searchText = this.temp;
+        // this.searchText = this.temp;
         this.latToName();
 
     }
@@ -50,11 +50,11 @@ export class AppComponent {
         this.latlng = this.lat+','+this.lng;
         this.temp= [];
         this.http.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' +this.latlng+'&key='+this.gkey)
-            .subscribe(data => { this.searchText = data.results['0'].formatted_address});
+            .subscribe(data => { this.searchText = data['results']['0'].formatted_address});
     }
     nameToLat() {
         this.ntemp = [];
         this.http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' +this.searchText.split(' ').join('+')+'&key=' + this.gkey)
-            .subscribe(data => { this.lat = data.results['0'].geometry.location.lat, this.lng = data.results['0'].geometry.location.lng, this.searchText = data.results['0'].formatted_address });
+            .subscribe(data => { this.lat = data['results']['0'].geometry.location.lat, this.lng = data['results']['0'].geometry.location.lng, this.searchText = data['results']['0'].formatted_address });
     }
 }
