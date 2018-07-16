@@ -1,20 +1,86 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<header>
+    <div class="collapse bg-dark" id="navbarHeader">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-md-7 py-4">
+                    <h4 class="text-white">Helpster Tes</h4>
+                    <p class="text-muted"> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Pariatur, perferendis. Deserunt voluptas nam expedita ducimus ut laboriosam non fugit reiciendis ratione, blanditiis, recusandae doloremque. Atque fugit et illo distinctio qui! </p>
+                </div>
+                <div class="col-sm-4 offset-md-1 py-4">
+                    <h4 class="text-white"><a href="catp.us">catp.us</a></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="navbar navbar-dark bg-dark box-shadow">
+        <div class="container d-flex justify-content-between">
+            <a href="#" class="navbar-brand d-flex align-items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                    <circle cx="12" cy="13" r="4"></circle>
+                </svg>
+                <strong>Search Location</strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </div>
+</header>
+<!-- Begin page content -->
+<main role="main" class="container">
+    <div class="row pt-5">
+        <form class="form-horizontal col" (submit)="findLocation()">
+            <div class="form-group">
+                <div class="input-group mb-3">
+                    <input [(ngModel)]="searchText" name="search-input" type="text" class="form-control" placeholder="Find My Location" aria-label="Find My Location" aria-describedby="inputform">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit" id="inputform"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <h2>Save Your Location</h2>
+        </div>
+        <div class="col-6 text-right">
+            <button class="btn btn-success" type="button" id="btnSave" (click)="addSaveLocation()">Save Location</button>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-md-6 list-location">
+            <div class="row m-0 align-items-center" *ngFor="let location of listSaved; let i = index" (click)="listShowMap(i)">
+                <div class="sloc-text col-10">
+                    <h3>
+                        {{location}} 
+                        <!-- Mie Ayam Raja Pahlawan<br>
+                        <small>
+                            Jalan Pahlawan Raya No.34, Banding
+                        </small> -->
+                    </h3>
+                </div>
+                <div class="sloc-icon col-2 text-center">
+                    <i class="fas fa-circle" aria-hidden="true"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6" >
+            <agm-map [latitude]="lat" [longitude]="lng" [mapDraggable]="false">
+                <agm-marker [latitude]="lat" [longitude]="lng" [markerDraggable]="true" (dragEnd)="onDragMarker($event)"></agm-marker>
+            </agm-map>
+        </div>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <span class="text-muted"> &copy; 2018 - catp.us .</span>
+    </div>
+</footer>
+
+
 
